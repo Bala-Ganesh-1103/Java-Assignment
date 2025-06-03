@@ -1,0 +1,65 @@
+package leSuccess_Assignment.Assignment7;
+
+public class BankAccount {
+    public static void main(String[] args) {
+        check obj=new check();
+        //obj.balance; //not a statement can't the private one class to another class
+    }
+}
+class check{
+    private int balance;
+    public void deposit(){
+        System.out.println("deposit your money...");
+    }
+    public void getBalance(){
+        System.out.println("get the balance");
+    }
+}
+
+
+package leSuccess_Assignment.Assignment7;
+import java.util.*;
+public class Calculator {
+    int result;
+    static int operationCount=0;
+    public void add(int a,int b){
+        result =a+b;
+        operationCount++;
+        System.out.println("Result "+result);
+    }
+    static void displayOperationCount(){
+        System.out.println("operation count performed"+operationCount);
+    }
+    public static void main(String[] args) {
+        Calculator calc=new Calculator();
+        calc.add(10,20);
+        calc.add(20,20);
+        displayOperationCount();
+    }
+
+}
+
+
+package leSuccess_Assignment.Assignment7;
+
+public class Student {
+    int rollNo;
+    String name;
+    Student(int rollNo,String name){
+        this.rollNo=rollNo;
+        this.name=name;
+    }
+    Student(int rollNo){
+        this.rollNo=rollNo;
+        this.name="Unknown";
+    }
+    public void display(){
+        System.out.println("RollNo "+ rollNo + " Name " +name);
+    }
+    public static void main(String[] args) {
+        Student obj=new Student(16,"Bharath");
+        Student obj2=new Student(12);
+        obj.display();
+        obj2.display();
+    }
+}
