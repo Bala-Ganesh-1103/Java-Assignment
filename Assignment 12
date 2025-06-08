@@ -1,0 +1,120 @@
+import java.util.Scanner;
+
+class DoublyLinkedList {
+    class Node {
+        int data;
+        Node prev, next;
+        Node(int data) {
+            this.data = data;
+        }
+    }
+    Node head = null;
+
+    void createList(int n, Scanner sc) {
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter value for node " + (i + 1) + ": ");
+            int val = sc.nextInt();
+            insertAtEnd(val);
+        }
+    }
+    void insertAtBeginning(int val) {
+        Node newNode = new Node(val);
+        newNode.next = head;
+        if (head != null) head.prev = newNode;
+        head = newNode;
+    }
+    void insertAtEnd(int val) {
+        Node newNode = new Node(val);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) temp = temp.next;
+        temp.next = newNode;
+        newNode.prev = temp;
+    }
+    void insertAt3rd(int val) {
+        Node newNode = new Node(val);
+        Node temp = head;
+        for (int i = 1; i < 2 && temp != null; i++) {
+            temp = temp.next;
+        }
+        if (temp == null || temp.next == null) {
+            insertAtEnd(val);
+            return;
+        }
+        newNode.next = temp.next;
+        newNode.prev = temp;
+        temp.next.prev = newNode;
+        temp.next = newNode;
+    }
+    void deleteFirst() {
+        if (head == null) return;
+        head = head.next;
+        if (head != null) head.prev = null;
+    }
+    void deleteLast() {
+        if (head == null || head.next == null) {
+            head = null;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) temp = temp.next;
+        temp.prev.next = null;
+    }
+    void deleteAt3rd() {
+        if (head == null) return;
+        Node temp = head;
+        for (int i = 1; i < 3 && temp != null; i++) {
+            temp = temp.next;
+        }
+        if (temp == null) return;
+        if (temp.prev != null) temp.prev.next = temp.next;
+        if (temp.next != null) temp.next.prev = temp.prev;
+    }
+    void display() {
+        Node temp = head;
+        System.out.print("List: ");
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        DoublyLinkedList list = new DoublyLinkedList();
+
+        System.out.print("Enter number of nodes: ");
+        int n = sc.nextInt();
+        list.createList(n, sc);
+        list.display();
+
+        System.out.print("Insert at beginning: ");
+        list.insertAtBeginning(sc.nextInt());
+        list.display();
+
+        System.out.print("Insert at end: ");
+        list.insertAtEnd(sc.nextInt());
+        list.display();
+
+        System.out.print("Insert at 3rd position: ");
+        list.insertAt3rd(sc.nextInt());
+        list.display();
+
+        System.out.println("Delete first node:");
+        list.deleteFirst();
+        list.display();
+
+        System.out.println("Delete last node:");
+        list.deleteLast();
+        list.display();
+
+        System.out.println("Delete 3rd node:");
+        list.deleteAt3rd();
+        list.display();
+
+        sc.close();
+    }
+}
