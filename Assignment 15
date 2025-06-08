@@ -1,0 +1,142 @@
+import java.util.*;
+
+public class NQueens {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> results = new ArrayList<>();
+        char[][] board = new char[n][n];
+
+        for (char[] row : board)
+            Arrays.fill(row, '.');
+
+        backtrack(0, board, results);
+        return results;
+    }
+
+    private void backtrack(int row, char[][] board, List<List<String>> results) {
+        if (row == board.length) {
+            List<String> solution = new ArrayList<>();
+            for (char[] r : board)
+                solution.add(new String(r));
+            results.add(solution);
+            return;
+        }
+
+        for (int col = 0; col < board.length; col++) {
+            if (isSafe(board, row, col)) {
+                board[row][col] = 'Q';
+                backtrack(row + 1, board, results);
+                board[row][col] = '.'; // backtrack
+            }
+        }
+    }
+
+    private boolean isSafe(char[][] board, int row, int col) {
+        for (int i = 0; i < row; i++) // check column
+            if (board[i][col] == 'Q') return false;
+
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 'Q') return false;
+
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++)
+            if (board[i][j] == 'Q') return false;
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        NQueens nq = new NQueens();
+        List<List<String>> solutions = nq.solveNQueens(4);
+        for (List<String> sol : solutions) {
+            for (String row : sol)
+                System.out.println(row);
+            System.out.println();
+        }
+    }
+}
+/////
+
+
+import java.util.*;
+
+public class RatMaze {
+    static List<String> result = new ArrayList<>();
+    static int[][] dir = { {1, 0}, {0, -1}, {0, 1}, {-1, 0} }; // D, L, R, U
+    static char[] move = { 'D', 'L', 'R', 'U' };
+
+    public static void solveMaze(int[][] maze, int n) {
+        boolean[][] visited = new boolean[n][n];
+        if (maze[0][0] == 1)
+            backtrack(0, 0, maze, visited, "", n);
+    }
+
+    private static void backtrack(int i, int j, int[][] maze, boolean[][] visited, String path, int n) {
+        if (i == n - 1 && j == n - 1) {
+            result.add(path);
+            return;
+        }
+
+        visited[i][j] = true;
+
+        for (int d = 0; d < 4; d++) {
+            int ni = i + dir[d][0];
+            int nj = j + dir[d][1];
+
+            if (ni >= 0 && nj >= 0 && ni < n && nj < n &&
+                maze[ni][nj] == 1 && !visited[ni][nj]) {
+                backtrack(ni, nj, maze, visited, path + move[d], n);
+            }
+        }
+
+        visited[i][j] = false; // backtrack
+    }
+
+    public static void main(String[] args) {
+        int[][] maze = {
+            {1, 0, 0, 0},
+            {1, 1, 0, 1},
+            {0, 1, 0, 0},
+            {1, 1, 1, 1}
+        };
+        int n = 4;
+
+        solveMaze(maze, n);
+        System.out.println(result); 
+    }
+}
+/////
+
+
+
+import java.util.*;
+
+public class PhoneCombinations {
+    static String[] mapping = {
+        "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if (digits.isEmpty()) return result;
+
+        backtrack(digits, 0, "", result);
+        return result;
+    }
+
+    private void backtrack(String digits, int index, String path, List<String> result) {
+        if (index == digits.length()) {
+            result.add(path);
+            return;
+        }
+
+        String letters = mapping[digits.charAt(index) - '0'];
+        for (char c : letters.toCharArray()) {
+            backtrack(digits, index + 1, path + c, result);
+        }
+    }
+
+    public static void main(String[] args) {
+        PhoneCombinations pc = new PhoneCombinations();
+        List<String> output = pc.letterCombinations("23");
+        System.out.println(output); 
+    }
+}
