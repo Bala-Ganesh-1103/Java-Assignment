@@ -1,0 +1,166 @@
+import java.util.*;
+
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int data) {
+        this.data = data;
+    }
+}
+
+public class LevelOrderTraversal {
+
+    public static TreeNode buildTreeLevelOrder(Scanner sc) {
+        int rootData = sc.nextInt();
+        if (rootData == -1) return null;
+
+        TreeNode root = new TreeNode(rootData);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            int leftData = sc.nextInt();
+            if (leftData != -1) {
+                current.left = new TreeNode(leftData);
+                queue.offer(current.left);
+            }
+            int rightData = sc.nextInt();
+            if (rightData != -1) {
+                current.right = new TreeNode(rightData);
+                queue.offer(current.right);
+            }
+        }
+        return root;
+    }
+
+    public static void printLevelOrder(TreeNode root) {
+        if (root == null) return;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            System.out.print(current.data + " ");
+            if (current.left != null) queue.offer(current.left);
+            if (current.right != null) queue.offer(current.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        TreeNode root = buildTreeLevelOrder(sc);
+        System.out.print("Level Order Traversal: ");
+        printLevelOrder(root);
+    }
+}
+
+////////
+
+import java.util.*;
+
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int data) {
+        this.data = data;
+    }
+}
+
+public class CountLeafNodes {
+
+    public static TreeNode buildTreeLevelOrder(Scanner sc) {
+        int rootData = sc.nextInt();
+        if (rootData == -1) return null;
+
+        TreeNode root = new TreeNode(rootData);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            int leftData = sc.nextInt();
+            if (leftData != -1) {
+                current.left = new TreeNode(leftData);
+                queue.offer(current.left);
+            }
+            int rightData = sc.nextInt();
+            if (rightData != -1) {
+                current.right = new TreeNode(rightData);
+                queue.offer(current.right);
+            }
+        }
+        return root;
+    }
+
+    public static int countLeafNodes(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        return countLeafNodes(root.left) + countLeafNodes(root.right);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        TreeNode root = buildTreeLevelOrder(sc);
+        int leafCount = countLeafNodes(root);
+        System.out.println("Number of Leaf Nodes: " + leafCount);
+    }
+}
+//////
+
+
+
+import java.util.*;
+
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int data) {
+        this.data = data;
+    }
+}
+
+public class TreeHeight {
+
+    public static TreeNode buildTreeLevelOrder(Scanner sc) {
+        int rootData = sc.nextInt();
+        if (rootData == -1) return null;
+
+        TreeNode root = new TreeNode(rootData);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            int leftData = sc.nextInt();
+            if (leftData != -1) {
+                current.left = new TreeNode(leftData);
+                queue.offer(current.left);
+            }
+            int rightData = sc.nextInt();
+            if (rightData != -1) {
+                current.right = new TreeNode(rightData);
+                queue.offer(current.right);
+            }
+        }
+        return root;
+    }
+
+    public static int findHeight(TreeNode root) {
+        if (root == null) return 0;
+        int left = findHeight(root.left);
+        int right = findHeight(root.right);
+        return Math.max(left, right) + 1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        TreeNode root = buildTreeLevelOrder(sc);
+        int height = findHeight(root);
+        System.out.println("Height of the Tree: " + height);
+    }
+}
