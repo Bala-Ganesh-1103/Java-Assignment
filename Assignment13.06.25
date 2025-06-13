@@ -1,0 +1,45 @@
+def calculate(a, b, operation) {
+    operation(a, b)
+}
+
+
+def add = { x, y -> x + y }
+println "Addition: " + calculate(10, 5, add)
+
+def subtract = { x, y -> x - y }
+println "Subtraction: " + calculate(10, 5, subtract)
+
+def multiply = { x, y -> x * y }
+println "Multiplication: " + calculate(10, 5, multiply)
+
+//////////////2/////
+print "Enter a sentence: "
+def sentence = System.console()?.readLine() ?: "hello world hello"
+def words = sentence.tokenize(" ")
+
+def frequency = [:].withDefault { 0 }
+
+words.each { word ->
+    frequency[word]++
+}
+
+println "Word Frequencies:"
+frequency.each { word, count ->
+    println "$word → $count"
+}
+
+Group Strings by Length
+
+def words = ["hi", "hello", "bye", "good", "sun"]
+
+def grouped = [:].withDefault { [] }
+
+words.each { word ->
+    grouped[word.length()] << word
+}
+
+println "Grouped by Length:"
+grouped.each { length, list ->
+    println "$length → $list"
+}
+
