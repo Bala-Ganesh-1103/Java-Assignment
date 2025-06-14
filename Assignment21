@@ -1,0 +1,62 @@
+def filename = "output.txt"
+def myName = "YourName"
+
+try {
+    new File(filename).text = myName
+
+    def content = new File(filename).text
+    println "Read from file: $content"
+
+    def a = 10
+    def b = 0
+    def result = a / b
+} catch (ArithmeticException e) {
+    println "Caught ArithmeticException: Cannot divide by zero"
+} catch (FileNotFoundException e) {
+    println "Caught FileNotFoundException: File not found"
+} catch (Exception e) {
+    println "General Exception: ${e.message}"
+} finally {
+    println "Finally block executed"
+}
+
+////method missing
+
+
+class DynamicMethodHandler {
+    def methodMissing(String name, args) {
+        println "Method ${name} is not defined"
+    }
+}
+
+def obj = new DynamicMethodHandler()
+obj.unknownMethod() 
+
+///// property missing
+
+class DynamicPropertyHandler {
+    def propertyMissing(String name) {
+        return "undefined"
+    }
+}
+
+def propObj = new DynamicPropertyHandler()
+println propObj.someUnknownProperty  
+
+////
+class DynamicPerson {}
+
+def person = new DynamicPerson()
+
+person.metaClass.name = "John"
+person.metaClass.age = 25
+
+person.metaClass.greet = { -> println "Hello, my name is $delegate.name" }
+
+println "Name: ${person.name}"
+println "Age: ${person.age}"
+person.greet()
+
+
+
+
